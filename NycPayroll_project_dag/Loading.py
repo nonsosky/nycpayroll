@@ -2,9 +2,20 @@
 import os
 from dotenv import load_dotenv
 import psycopg2
+from spark_utils import getSparkSession
 
 def run_loading():
     try:
+        # Calling spark session function
+        spark = getSparkSession()
+        
+        #Load Master Data
+        employee_dim = spark.read.csv('Nyc_Payroll_dag/dataset/cleaned_data/employee_dim.csv', header=True, inferSchema=True)
+        agency_dim = spark.read.csv('Nyc_Payroll_dag/dataset/cleaned_data/agency_dim.csv', header=True, inferSchema=True)
+        jobtitle_dim = spark.read.csv('Nyc_Payroll_dag/dataset/cleaned_data/jobtitle_dim.csv', header=True, inferSchema=True)
+        time_dim = spark.read.csv('Nyc_Payroll_dag/dataset/cleaned_data/time_dim.csv', header=True, inferSchema=True)
+        payroll_fact_tbl = spark.read.csv('Nyc_Payroll_dag/dataset/cleaned_data/payroll_fact_tbl.csv', header=True, inferSchema=True)
+
         # Develop a function to get the Database connection
         load_dotenv()
 
@@ -107,7 +118,7 @@ def run_loading():
         agency_dim.write.jdbc(url=url, table="nyc_payroll.agency",  mode="append", properties=properties)
         jobtitle_dim.write.jdbc(url=url, table="nyc_payroll.jobtitle",  mode="append", properties=properties)
         time_dim.write.jdbc(url=url, table="nyc_payroll.time", mode="append", properties=properties)
-        ayroll_fact_tbl.write.jdbc(url=url, table="nyc_payroll.fact_table",  mode="append", properties=properties)
+        payroll_fact_tbl.write.jdbc(url=url, table="nyc_payroll.fact_table",  mode="append", properties=properties)
         print('database, table and data loaded successfully')
     except Exception as e:
         print("Data loading Failed!", e)

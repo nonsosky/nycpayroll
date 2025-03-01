@@ -1,7 +1,6 @@
 # Import Necessary Libraries
-import pyspark
-from pyspark.sql import SparkSession
 import os, glob
+from spark_utils import getSparkSession
 
 
 # Data Extraction
@@ -10,16 +9,7 @@ def run_extraction():
         # Set Java Environment
         #os.environ['JAVA_HOME'] = "C:/java8"
 
-        #Initialize Spark Session
-        spark = SparkSession.builder \
-                .appName("NYC Payroll ETL") \
-                .config("spark.jars", "postgresql-42.7.4.jar") \
-                .getOrCreate()
-
-        #Load Master Data
-        employee_df = spark.read.csv('dataset/raw/EmpMaster.csv', header=True, inferSchema=True)
-        agency_df = spark.read.csv('dataset/raw/AgencyMaster.csv', header=True, inferSchema=True)
-        jobtitle_df = spark.read.csv('dataset/raw/TitleMaster.csv', header=True, inferSchema=True)
+        spark = getSparkSession()
 
         #Dynamically Loading and Merging all Payroll data
 
@@ -43,6 +33,8 @@ def run_extraction():
 
         # Load and process payroll data
         payroll_df = load_payroll_data(payroll_files)
+
+        payroll_df.write.csv('Nyc_Payroll_dag/dataset/payroll_merged_data/payroll_merged.csv', header=True)
         print("Data extracted successfully")
     except Exception as e:
         print("An error occured: {e}")

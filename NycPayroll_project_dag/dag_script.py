@@ -1,10 +1,9 @@
 from datetime import datetime, timedelta
 from airflow import DAG
 from airflow.operators.python_operator import PythonOperator
-from Nyc_Payroll_dag.Extraction import run_extraction
-from Nyc_Payroll_dag.Transformation import run_transformation
+from Extraction import run_extraction
+from Transformation import run_transformation
 from Loading import run_loading
-
 
 default_args = {
     'owner' : 'airflow',
@@ -18,9 +17,10 @@ default_args = {
 }
 
 dag = DAG(
-    'nyc_payroll_pipeline',
+    'nycpayroll_pipeline',
     default_args = default_args,
-    description = 'This represents NYC Payroll Data Management pipeline'
+    description = 'This represents NYC Payroll Data Management pipeline',
+    schedule="@daily"
 )
 
 extraction = PythonOperator(

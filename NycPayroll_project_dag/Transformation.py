@@ -1,9 +1,19 @@
 # Import Necessary Libraries
 import pyspark
 from pyspark.sql.functions import monotonically_increasing_id
+from spark_utils import getSparkSession
 
 def run_transformation():
     try:
+        #Calling Spark Session
+        spark = getSparkSession()
+
+        #Load Master Data
+        employee_df = spark.read.csv('dataset/raw/EmpMaster.csv', header=True, inferSchema=True)
+        agency_df = spark.read.csv('dataset/raw/AgencyMaster.csv', header=True, inferSchema=True)
+        jobtitle_df = spark.read.csv('dataset/raw/TitleMaster.csv', header=True, inferSchema=True)
+        payroll_df = spark.read.csv('Nyc_Payroll_dag/dataset/payroll_merged_data/payroll_merged.csv', header=True, inferSchema=True)
+
         # Convert AgencyStartDate to Date datatype
         payroll_df = payroll_df.withColumn("AgencyStartDate", pyspark.sql.functions.to_date(payroll_df["AgencyStartDate"], "M/d/yyyy"))
 
@@ -49,11 +59,11 @@ def run_transformation():
                         .select('PayrollID','e.EmployeeID', 'a.AgencyID', 't.TitleCode', 'TimeID', 'PayrollNumber', 'BaseSalary', 'PayBasis', 'AgencyStartDate', 'RegularHours', 'RegularGrossPaid', 'OTHours', 'TotalOTPaid', 'TotalOtherPay')
 
         # Save tables to Cleaned_data folder using parquet
-        employee_dim.write.mode("overwrite").parquet("dataset/cleaned_data/employee_dim")
-        agency_dim.write.mode("overwrite").parquet("dataset/cleaned_data/agency_dim")
-        jobtitle_dim.write.mode("overwrite").parquet("dataset/cleaned_data/jobtitle_dim")
-        time_dim.write.mode("overwrite").parquet("dataset/cleaned_data/time_dim")
-        payroll_fact_tbl.write.mode("overwrite").parquet("dataset/cleaned_data/payroll_fact_table")
+        employee_dim.write.csv('Nyc_Payroll_dag/dataset/cleaned_data/employee_dim.csv', header=True)
+        agency_dim.write.csv('Nyc_Payroll_dag/dataset/cleaned_data/agency_dim.csv', header=True)
+        jobtitle_dim.write.csv('Nyc_Payroll_dag/dataset/cleaned_data/jobtitle_dim.csv', header=True)
+        time_dim.write.csv('Nyc_Payroll_dag/dataset/cleaned_data/time_dim.csv', header=True)
+        payroll_fact_tbl.write.csv('Nyc_Payroll_dag/dataset/cleaned_data/payroll_fact_tbl.csv', header=True)
 
         # Function to rename all columns to lowercase
         def rename_columns_to_lowercase(df):
