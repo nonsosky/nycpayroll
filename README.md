@@ -38,4 +38,14 @@
 #### 2. Optimize SQL queries by implementing indexing and partitioning strategies.
 #### 3. Schedule data pipeline executions during off-peak hours to reduce system load.
 
+## Conclusion
+#### In this project I was able to design and implement a payroll data pipeline to efficiently process and analyze payroll records of NYC. Using PySpark, raw payroll data from CSV files was cleaned, transformed, and prepared for loading. The transformed data was then stored in a PostgreSQL data warehouse for structured querying and reporting. Apache Airflow was utilized to orchestrate the entire pipeline, automating data extraction, transformation, and loading (ETL) processes.
 
+## Apache Airflow Orchestration
+![alt text](images/Airflow.png)
+
+## Data Warehouse Schema
+![alt text](images\Data_warehouse_schema.png)
+
+## PostgreSQL Data Warehouse
+![alt text](images\DataWarehouse.png)![alt text](images\DataWarehouse1.png)
