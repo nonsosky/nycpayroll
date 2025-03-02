@@ -45,7 +45,7 @@
 ![alt text](images/Airflow.png)
 
 ## Data Warehouse Schema
-![alt text](images\Data_warehouse_schema.png)
+![alt text](images/Data_warehouse_schema.png)
 
 ## PostgreSQL Data Warehouse
-![alt text](images\DataWarehouse.png)![alt text](images\DataWarehouse1.png)
+![alt text](images/DataWarehouse.png)![alt text](images/DataWarehouse1.png)
