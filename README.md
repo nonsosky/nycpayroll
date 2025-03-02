@@ -15,3 +15,27 @@
 
 ## Data Warehouse Design for NYC 
 ![alt text](images/Data%20Model.png)
+
+## ETL DATA ARCHITECTURE
+![alt text](images/Data%20Architecture.png)
+
+## ETL Pipeline Overview
+#### 1. Extraction: Retrieve payroll and Master data from CSV files stored in a remote directory.
+#### 2. Transformation: Clean, standardize, and merge datasets to ensure consistency and accuracy.
+#### 3. Loading: Load the processed data into a PostgreSQL data warehouse for storage and analysis.
+#### 4. Orchestration: Use Apache Airflow to efficiently automate and monitor the pipeline execution.
+
+## TECHNOLOGY STACKS USED
+#### 1. Python: Was used for the ETL pipeline scripting due to its simplicity and vast ecosystem of libraries.
+#### 2. PySpark: Was essential for the data manipulation and transformation.
+#### 3. PostgreSQL: Was used for data storage relational database that ensures efficient storage and querying of structured data.
+#### 4. Psycopg2 & Postgresql-42.7.4.jar: Used to interact with database allowing direct execution of SQL commands within Python scripts.
+#### 5. Apache Airflow (Orchestration): Was used for the automation, scheduling, and monitoring of the ETL pipeline.
+#### 6. GitHub: Version control and documentation.
+
+## Optimization Recommendations For NYC
+#### 1. Use cloud-based data warehouses (e.g., Snowflake, BigQuery, or Amazon Redshift) for scalability.
+#### 2. Optimize SQL queries by implementing indexing and partitioning strategies.
+#### 3. Schedule data pipeline executions during off-peak hours to reduce system load.
+
+
