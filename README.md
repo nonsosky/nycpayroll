@@ -14,4 +14,4 @@
 #### 4. Create a public user with limited privileges to enable public access to the NYC Data warehouse
 
 ## Data Warehouse Design for NYC 
-![alt text](image.png)
+![alt text](images/Data%20Model.png)
