@@ -13,4 +13,5 @@
 #### 3. Ensure quality and consistency of data in your pipeline
 #### 4. Create a public user with limited privileges to enable public access to the NYC Data warehouse
 
-
+## Data Warehouse Design for NYC 
+![alt text](image.png)
